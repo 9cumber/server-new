@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 # Copyright © 2015-2018 9cumber Ltd. All Rights Reserved.
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import absolute_import, division, print_function
 import os
 import click
 from flask.cli import FlaskGroup

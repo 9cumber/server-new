@@ -12,6 +12,8 @@ flask-jwt-extended = "*"
 flask-wtf = "*"
 wtforms = "*"
 amaboko = "*"
+sqlalchemy = "*"
+pymysql = "*"
 
 
 [dev-packages]
@@ -27,6 +29,8 @@ funcsigs = "*"
 singledispatch = "*"
 "backports.functools-lru-cache" = "*"
 configparser = "*"
+flask-sqlacodegen = "*"
+
 
 
 [requires]
