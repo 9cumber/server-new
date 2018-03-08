@@ -2,11 +2,11 @@
 # Copyright © 2015-2018 9cumber Ltd. All Rights Reserved.
 from __future__ import absolute_import, division, print_function, unicode_literals
 from flask import render_template, redirect, request, url_for, flash
-from . import admin_auth
-from ..login_manager import AdminUnauthorized
-from ..models import User
-from ..forms import UserForm
-from .. import login_manager
+from cucumber.view.admin import auth
+from cucumber.modules.login_manager import AdminUnauthorized
+from cucumber.models import User
+from cucumber.modules.forms import UserForm
+from cucumber.modules import login_manager
 from flask_jwt_extended import set_access_cookies, unset_jwt_cookies
 """
 管理者用ログインページ

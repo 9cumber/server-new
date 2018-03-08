@@ -4,10 +4,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import Flask
 from flask_migrate import Migrate
 from config import config
-from app.amazon import AmazonSearch
-from app.flaskconfig import MyFlaskConfig
-from app.models import db
-from app.login_manager import LoginManager
+from cucumber.modules.amazon import AmazonSearch
+from cucumber.modules.flaskconfig import MyFlaskConfig
+from cucumber.models import db
+from cucumber.login_manager import LoginManager
 from flask_jwt_extended import JWTManager
 
 amazon = AmazonSearch()
@@ -20,14 +20,14 @@ def create_app(config_name):
     app = Flask(__name__)
 
     # admin authenticator
-    from .admin_auth import admin_auth as admin_auth_blueprint
+    from cucumber.views.admin.auth import admin_auth as admin_auth_blueprint
     app.register_blueprint(admin_auth_blueprint, url_prefix='/admin/auth')
 
     app.config = MyFlaskConfig(app.config)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    from app.models import db
+    from cucumber.models import db
 
     db.init_app(app)
     migrate.init_app(app, db)

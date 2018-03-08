@@ -1,12 +1,12 @@
 # coding: utf-8
 # Copyright © 2015-2018 9cumber Ltd. All Rights Reserved.
 from __future__ import absolute_import, division, print_function, unicode_literals
-from .. import login_manager
-from . import admin_main
+from cucumber.modules import login_manager
+from view.admin import main
 from flask import url_for, render_template, redirect, request, flash
-from ..login_manager import AdminUnauthorized
-from app.models import Book, Stock, ReturnedStock, SoldStock, ReservedInfo
-from ..forms import UserForm
+from cucumber.modules.login_manager import AdminUnauthorized
+from cucumber.models import Book, Stock, ReturnedStock, SoldStock, ReservedInfo
+from cucumber.view.forms import UserForm
 """
 管理者用ページ
 """
