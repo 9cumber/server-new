@@ -1,10 +1,10 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: argvc/pipenv-alpine-python2
+    machine: true
 
     steps:
       - checkout
-      - run: make deps
-      - run: make test
+
+      - run: docker build -t 9cumber-server .
+      - run: docker run --rm -ti  9cumber-server test

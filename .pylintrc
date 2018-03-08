@@ -128,7 +128,8 @@ disable=print-statement,
         dict-keys-not-iterating,
         dict-values-not-iterating,
         r,
-        c
+        c,
+        fixme
 
 
 # Enable the message, report, category or checker with the given id(s). You can

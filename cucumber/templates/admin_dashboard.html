@@ -1,0 +1,80 @@
+{% extends "common.html" %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+
+    {% block head %}
+    {{ super() }}
+    {% endblock %}
+
+  </head>
+
+  <body>
+
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+
+    {% block content %}
+    {{ super() }}
+
+    <div class="container">
+      <div class="row">
+
+        {% include "components/sidebar.html" %}
+
+        <div class="col-sm-9">
+          <blockquote>
+            <p>警告者リスト</p>
+          </blockquote>
+
+          <!-- TODO: 冗長なので抽象化 -->
+          <h3 class="text-danger">7日経過</h3>
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>@s1220aaa</td><td>aaaaaaaaa</td></tr>
+              <tr><td>@s1220bbb</td><td>bbbbbbbbb</td></tr>
+              <tr><td>@s1220ccc</td><td>ccccccccc</td></tr>
+              <tr><td>@s1220ddd</td><td>ddddddddd</td></tr>
+            </tbody>
+          </table>
+
+          <br>
+
+          <h3 class="text-warning">3日経過</h3>
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>@s1220www</td><td>wwwwwwwww</td></tr>
+              <tr><td>@s1220xxx</td><td>xxxxxxxxx</td></tr>
+              <tr><td>@s1220yyy</td><td>yyyyyyyyy</td></tr>
+              <tr><td>@s1220zzz</td><td>zzzzzzzzz</td></tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+    </div>
+
+    {% endblock %}
+
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+
+  </body>
+</html>
+
+utogaw

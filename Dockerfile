@@ -1,7 +1,8 @@
 FROM argvc/pipenv-alpine-python2
 
-WORKDIR /app/src
 USER root
+RUN apk add --update --no-cache g++ gcc libxslt-dev
+WORKDIR /app/src
 
 ADD Pipfile /app/src
 ADD Pipfile.lock /app/src

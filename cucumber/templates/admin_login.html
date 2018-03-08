@@ -1,0 +1,63 @@
+{% extends "common.html" %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+
+    {% block head %}
+    {{ super() }}
+    {% endblock %}
+
+  </head>
+
+  <body>
+
+    {% block header %}
+    {% endblock %}
+
+    {% block content %}
+
+    {{ super() }}
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message[0]}}">
+      <a href="#" class="close" data-dismiss="alert">×</a>
+      <strong>{{ message[1] }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+
+          <div class="wrap">
+            <p class="form-title">admin_proto</p>
+
+            <form method="POST" data-toggle="validator" class="login" name="loginform">
+              {{ form.hidden_tag() }}
+              {{ form.email(class='form-button') }}
+              {{ form.password(class='form-button') }}
+              <label>
+                {{ form.remember() }}
+                Keep me logged in
+              </label>
+              {{ form.submit(class='form-button btn btn-primary btn-sm') }}
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endblock %}
+
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+
+  </body>
+</html>
+
