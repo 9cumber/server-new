@@ -7,6 +7,7 @@ from flask_env import MetaFlaskEnv
 import os
 import binascii
 
+
 @six.add_metaclass(MetaFlaskEnv)
 class Configuration(object):
     ENV_PREFIX = 'CUCUMBER_'

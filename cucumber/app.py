@@ -18,6 +18,4 @@ def create_app():
     init_views(app)
     init_extentions(app)
 
-
-
     return app
