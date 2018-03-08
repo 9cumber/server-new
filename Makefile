@@ -9,6 +9,11 @@ clean:
 yapf:
 	pipenv run yapf -ri cucumber test
 
+export-lib:
+	pipenv lock --requirements > requirements.txt
+	pipenv run pip install -r requirements.txt -t lib
+
+
 test: clean test-pytest test-pylint test-yapf
 
 test-pytest:
@@ -20,4 +25,4 @@ test-pylint:
 test-yapf:
 	test $(shell pipenv run yapf --diff -r cucumber | wc -l) -eq 0
 
-.PHONY: deps clean yapf test test-pytest test-pylint test-yapf
+.PHONY: deps clean yapf test test-pytest test-pylint test-yapf export-lib
