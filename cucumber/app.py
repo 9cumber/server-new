@@ -3,16 +3,15 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 
-def create_app(config_name):
+def create_app():
     from cucumber.extentions import init_extentions
+    from cucumber.views import init_views
     from flask import Flask
 
     app = Flask(__name__)
 
     # admin authenticator
-    from cucumber.views.admin.auth import admin_auth as admin_auth_blueprint
-    app.register_blueprint(admin_auth_blueprint, url_prefix='/admin/auth')
-
+    init_views(app)
     init_extentions(app)
 
     # config loader

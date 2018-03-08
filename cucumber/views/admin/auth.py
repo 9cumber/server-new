@@ -1,16 +1,18 @@
 # coding: utf-8
 # Copyright © 2015-2018 9cumber Ltd. All Rights Reserved.
+# 管理者用ログインページ
 from __future__ import absolute_import, division, print_function, unicode_literals
-from flask import render_template, redirect, request, url_for, flash
-from cucumber.view.admin import auth
-from cucumber.modules.login_manager import AdminUnauthorized
-from cucumber.models import User
-from cucumber.modules.forms import UserForm
-from cucumber.modules import login_manager
+from flask import render_template, redirect, request, url_for, flash, Blueprint
 from flask_jwt_extended import set_access_cookies, unset_jwt_cookies
-"""
-管理者用ログインページ
-"""
+
+from cucumber.modules.login_manager import AdminUnauthorized
+from cucumber.views.forms import UserForm
+from cucumber.extentions import login_manager
+
+admin_auth = Blueprint('admin_auth', __name__)
+
+from mock import MagicMock
+User = MagicMock()  # FIXME: Mocking
 
 
 @admin_auth.route('/', methods=['GET'])
@@ -52,6 +54,6 @@ def logout():
 
 
 @admin_auth.errorhandler(AdminUnauthorized)
-def handle_admin_unauthorized(error):
+def handle_admin_unauthorized(_):
     flash('You need to log in as an administrator.', 'warning')
     return redirect(url_for('admin_auth.login'))

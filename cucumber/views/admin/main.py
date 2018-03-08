@@ -1,15 +1,22 @@
 # coding: utf-8
 # Copyright © 2015-2018 9cumber Ltd. All Rights Reserved.
+# 管理者用ページ
 from __future__ import absolute_import, division, print_function, unicode_literals
-from cucumber.modules import login_manager
-from view.admin import main
-from flask import url_for, render_template, redirect, request, flash
+from flask import url_for, render_template, redirect, flash, Blueprint
+from cucumber.views.forms import UserForm
+
+from mock import MagicMock
+
+Book = MagicMock()
+Stock = MagicMock()
+ReturnedStock = MagicMock()
+SoldStock = MagicMock()
+ReservedInfo = MagicMock()
+
 from cucumber.modules.login_manager import AdminUnauthorized
-from cucumber.models import Book, Stock, ReturnedStock, SoldStock, ReservedInfo
-from cucumber.view.forms import UserForm
-"""
-管理者用ページ
-"""
+from cucumber.extentions import login_manager
+
+admin_main = Blueprint('admin_main', __name__)
 
 
 @admin_main.route('/', methods=['GET'])
@@ -37,7 +44,7 @@ def book_list():
 
 @admin_main.route('/book/detail/<int:book_id>', methods=['GET'])
 @login_manager.admin_required
-def book_detail():
+def book_detail(book_id):
     book = Book.fetch(id=book_id)
     return render_template(
         'detail_book.html', book=book, user=login_manager.get_logged_user())
@@ -69,7 +76,7 @@ admin_main.add_url_rule(
     '/reserved/list', view_func=reserved_list_view_function)
 
 
-def base_registration_view_function(stock, model):
+def base_registration_view_function(stock):
     def func():
         form = UserForm()
         return render_template(
@@ -81,14 +88,12 @@ def base_registration_view_function(stock, model):
     return login_manager.admin_required(func)
 
 
-stock_registration_view_function = base_registration_view_function(
-    'stock', Stock)
+stock_registration_view_function = base_registration_view_function('stock')
 returned_registration_view_function = base_registration_view_function(
-    'returned', ReturnedStock)
-sold_registration_view_function = base_registration_view_function(
-    'sold', SoldStock)
+    'returned')
+sold_registration_view_function = base_registration_view_function('sold')
 reserved_registration_view_function = base_registration_view_function(
-    'reserved', ReservedInfo)
+    'reserved')
 
 admin_main.add_url_rule(
     '/stock/registration', view_func=stock_registration_view_function)
@@ -101,6 +106,6 @@ admin_main.add_url_rule(
 
 
 @admin_main.errorhandler(AdminUnauthorized)
-def handle_admin_unauthorized(error):
+def handle_admin_unauthorized(_):
     flash('You need to log in as an administrator.', 'warning')
     return redirect(url_for('admin_auth.login'))

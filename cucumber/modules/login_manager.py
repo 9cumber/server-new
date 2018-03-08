@@ -43,9 +43,10 @@ class DefaultUserManager(object):
 
     @staticmethod
     def resolve_user_by_id(user_id):
-        from app.models import User, db
-        # pylint: disable=no-member
-        return db.session.query(User).filter_by(id=user_id).first()
+        # pylint: disable=unused-argument
+        # FIXME
+        # return db.session.query(User).filter_by(id=user_id).first()
+        return None
 
 
 class LoginManager(object):
