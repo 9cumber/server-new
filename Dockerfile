@@ -9,4 +9,6 @@ ADD Makefile /app/src
 
 RUN make deps
 
+ADD . /app/src
+
 ENTRYPOINT ["switch", "test=make test", "run=make run", "--", "sh"]
