@@ -6,4 +6,11 @@ name = "pypi"
 [packages]
 flask = "*"
 
+
+
+
 [dev-packages]
+
+pylint = "*"
+yapf = "*"
+pytest = "*"
