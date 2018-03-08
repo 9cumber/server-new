@@ -6,6 +6,8 @@ from functools import wraps
 from flask_jwt_extended.view_decorators import _decode_jwt_from_request
 from flask_jwt_extended.exceptions import JWTExtendedException
 from flask_jwt_extended import create_access_token, get_jwt_identity
+from abc import ABCMeta, abstractmethod
+import six
 
 try:
     from flask import _app_ctx_stack as ctx_stack
@@ -19,6 +21,24 @@ class UserUnauthorized(Exception):
 
 class AdminUnauthorized(Exception):
     pass
+
+
+@six.add_metaclass(ABCMeta)
+class BaseUserManager(object):
+    @staticmethod
+    @abstractmethod
+    def get_id_in_user(user):
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def check_admin(user):
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def resolve_user_by_id(user_id):
+        raise NotImplementedError
 
 
 # reffred to concept of https://github.com/mattupstate/flask-jwt/issues/106
@@ -36,28 +56,16 @@ def _jwt_optional(fn):
     return decorator
 
 
-class DefaultUserManager(object):
-    @staticmethod
-    def get_id_in_user(user):
-        return user.id
-
-    @staticmethod
-    def resolve_user_by_id(user_id):
-        # pylint: disable=unused-argument
-        # FIXME
-        # return db.session.query(User).filter_by(id=user_id).first()
-        return None
-
-
 class LoginManager(object):
-
-    user_manager = DefaultUserManager()
-
     def __init__(self, app=None):
         self.app = app
+        self.user_manager = None
 
-    def init_app(self, app):
+    def init_app(self, app, user_manager):
         self.app = app
+        if not isinstance(user_manager, BaseUserManager):
+            raise RuntimeError
+        self.user_manager = user_manager
 
     def logged_user(self, user):
         # typed: (User, bool) -> str
@@ -86,7 +94,7 @@ class LoginManager(object):
         may_user = self.get_logged_user()  # Union[User, None]
         if may_user is None:
             return False
-        if may_user.is_admin is not True:
+        if self.user_manager.check_admin(may_user) is not True:
             return False
         return True
 

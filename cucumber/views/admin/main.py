@@ -14,7 +14,7 @@ SoldStock = MagicMock()
 ReservedInfo = MagicMock()
 
 from cucumber.modules.login_manager import AdminUnauthorized
-from cucumber.extentions import login_manager
+from cucumber.extensions import login_manager
 
 admin_main = Blueprint('admin_main', __name__)
 

@@ -7,12 +7,10 @@ from flask_jwt_extended import set_access_cookies, unset_jwt_cookies
 
 from cucumber.modules.login_manager import AdminUnauthorized
 from cucumber.views.forms import UserForm
-from cucumber.extentions import login_manager
+from cucumber.extensions import login_manager
+from cucumber.entities import User
 
 admin_auth = Blueprint('admin_auth', __name__)
-
-from mock import MagicMock
-User = MagicMock()  # FIXME: Mocking
 
 
 @admin_auth.route('/', methods=['GET'])
@@ -30,8 +28,9 @@ def login():
         if form.validate():
             admin = User.fetch(
                 email=form.email.data, password=form.password.data)
-            if admin is not None and admin.is_admin is True and admin.verify_user(
-                    form.email.data, form.password.data) is True:
+            if admin is not None and bool(
+                    admin.is_admin) and admin.verify_user(
+                        form.password.data) is True:
                 access_token = login_manager.logged_user(admin)
                 res = redirect(
                     request.args.get('next')

@@ -5,7 +5,7 @@ from cucumber.config import Configuration
 
 
 def create_app():
-    from cucumber.extentions import init_extentions
+    from cucumber.extensions import init_extentions
     from cucumber.views import init_views
     from flask import Flask
 

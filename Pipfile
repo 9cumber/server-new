@@ -16,6 +16,8 @@ sqlalchemy = "*"
 pymysql = "*"
 flask-env = "*"
 six = "*"
+flask-bcrypt = "*"
+flask-sqlalchemy = "*"
 
 
 [dev-packages]
