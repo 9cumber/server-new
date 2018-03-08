@@ -6,6 +6,6 @@ jobs:
 
     steps:
       - checkout
-      - run: apk add --update --no-cache g++ gcc libxslt-dev
+      - run: sudo apk add --update --no-cache g++ gcc libxslt-dev
       - run: make deps
       - run: make test
