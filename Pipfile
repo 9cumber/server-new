@@ -1,13 +1,19 @@
 [[source]]
+
 verify_ssl = true
 url = "https://pypi.python.org/simple"
 name = "pypi"
 
+
 [packages]
+
 flask = "*"
+sqlalchemy = "*"
+pymysql = "*"
 
 
 [dev-packages]
+
 pytest = "*"
 pylint = "*"
 yapf = "*"
@@ -19,7 +25,9 @@ funcsigs = "*"
 singledispatch = "*"
 "backports.functools-lru-cache" = "*"
 configparser = "*"
+flask-sqlacodegen = "*"
+
 
 [requires]
-python_version = '2.7'
 
+python_version = '2.7'
