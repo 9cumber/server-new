@@ -58,7 +58,7 @@ def base_list_view_function(stock, model):
             lists=lists,
             user=login_manager.get_logged_user())
 
-    func.__name__ = 'list_' + stock
+    func.__name__ = str('list_' + stock)
     return login_manager.admin_required(func)
 
 
@@ -84,7 +84,7 @@ def base_registration_view_function(stock):
             form=form,
             user=login_manager.get_logged_user())
 
-    func.__name__ = 'register_' + stock
+    func.__name__ = str('register_' + stock)
     return login_manager.admin_required(func)
 
 
