@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: argvc/pipenv-alpine-python2
+
+    steps:
+      - checkout
+      - run: make deps
+      - run: make test

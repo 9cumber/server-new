@@ -7,10 +7,19 @@ name = "pypi"
 flask = "*"
 
 
-
-
 [dev-packages]
-
+pytest = "*"
 pylint = "*"
 yapf = "*"
-pytest = "*"
+pytest-cov = "*"
+mock = "*"
+funcsigs = "*"
+"functools32" = "*"
+"enum34" = "*"
+singledispatch = "*"
+"backports.functools-lru-cache" = "*"
+configparser = "*"
+
+[requires]
+python_version = '2.7'
+
