@@ -14,6 +14,8 @@ export-lib:
 	pipenv run pip install -r requirements.txt -t lib
 
 
+run:
+	pipenv run python -m cucumber.endpoint
 test: clean test-pytest test-pylint test-yapf
 
 test-pytest:
