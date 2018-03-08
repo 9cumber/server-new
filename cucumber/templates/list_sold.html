@@ -1,0 +1,79 @@
+{% extends "common.html" %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+
+    {% block head %}
+    {{ super() }}
+    {% endblock %}
+
+  </head>
+
+  <body>
+
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+
+    {% block content %}
+    {{ super() }}
+
+    <div class="container">
+      <div class="row">
+
+        {% include "components/sidebar.html" %}
+
+        <div class="col-sm-9">
+          <blockquote>
+            <p>売上一覧</p>
+          </blockquote>
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>タイトル</th>
+                <th>売上日</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in lists %}
+              <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.book.title }}</td>
+                <td>{{ item.sold_at }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <nav>
+            <ul class="pagination pagination-lg">
+              <li>
+                <a href="#" aria-label="前のページへ">
+                  <span aria-hidden="true">«</span>
+                </a>
+              </li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="次のページへ">
+                  <span aria-hidden="true">»</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    {% endblock %}
+
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+
+  </body>
+</html>
+

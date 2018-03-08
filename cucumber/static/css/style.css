@@ -1,0 +1,112 @@
+
+.list-group-item {
+    background: #add8e6;
+}
+
+
+.navbar-default {
+  background-color: #375a7f;
+  border-color: transparent;
+}
+
+.navbar-default .navbar-brand {
+    color: #ffffff;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #00bc8c;
+}
+.navbar-header > a {
+    background-color: #375a7f;
+}
+#sign-out a {
+    color: #ffffff;
+}
+
+#sign-out a:hover,
+#sign-out a:focus {
+    color: #00bc8c;
+}
+
+.col-sm-9 {
+    background:white;
+    padding: 10px 20px;
+}
+
+div #form_ISBN {
+    padding: 20px;
+    background: #e9ffff;
+    border-radius: 1em;
+    margin-bottom: 10px;
+}
+
+div .modal-header {
+    background-color: #e9ffff;
+}
+
+.col-sm-9 div #editISBN {
+    width: 80%;
+}
+
+.col-sm-9 div #editBookTitle {
+    width: 80%;
+}
+
+.col-sm-9 div #editAuthorName {
+    width: 80%;
+}
+
+.col-sm-9 div #editPublicationDate {
+    width: 80%;
+}
+
+.col-sm-9 div #editPrice {
+    width: 79.2%;
+}
+
+.col-sm-9 div #editCompany {
+    width: 80%;
+}
+
+.col-sm-9 div #editArrivalDate {
+    width: 80%;
+}
+
+.col-sm-9 div #editReturnDate {
+    width: 80%;
+}
+
+.col-sm-9 div #editSalesDate {
+    width: 80%;
+}
+
+.col-sm-9 div #editShelfCord {
+    width: 80%;
+}
+
+.col-sm-9 div #editQuantity {
+    width: 30%;
+}
+
+.col-sm-9 div #Remarks {
+    width: 80%;
+}
+
+
+.col-sm-9 #registration {
+    height: 50px;
+    width: 100px;
+    font-size: 120%;
+    border: outset 1px;
+    float: right;
+    margin-bottom: 20px;
+}
+
+.col-sm-9 #ResultMessage .breadcrumb li + li:before {
+    content: ">";
+}
+
+.col-sm-9 #ResultMessage ol {
+    display: inline;
+    background: #e9ffff;
+}

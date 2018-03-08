@@ -1,0 +1,84 @@
+{% extends "common.html" %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+
+    {% block head %}
+    {{ super() }}
+    {% endblock %}
+
+  </head>
+
+  <body>
+
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+
+    {% block content %}
+    {{ super() }}
+
+    <div class="container">
+      <div class="row">
+
+        {% include "components/sidebar.html" %}
+
+        <div class="col-sm-9">
+          <blockquote>
+            <p>在庫一覧</p>
+          </blockquote>
+          <table class="table table-striped table-bordered table-hover" id="page-1">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in lists %}
+              <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.book.title }}</td>
+                <td>{{ item.book.author }}</td>
+                <td class="col-md-2">
+                  <button id="edit" class="btn btn-default navbar-btn">編集</button>
+                  <button id="delete" class="btn btn-danger navbar-btn">削除</button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <nav>
+            <ul class="pagination pagination-lg">
+              <li>
+                <a href="#" aria-label="前のページへ">
+                  <span aria-hidden="true">«</span>
+                </a>
+              </li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="次のページへ">
+                  <span aria-hidden="true">»</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    {% endblock %}
+
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+
+  </body>
+</html>
+
