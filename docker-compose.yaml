@@ -1,0 +1,31 @@
+version: '2.1'
+services:
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - "./database:/docker-entrypoint-initdb.d"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306"
+    healthcheck:
+      test: ["CMD", "mysql" ,"-uroot", "-ppassword", "cucumber", "-e", "select count(*) from users"]
+      timeout: 3s
+      retries: 20
+  proxy_dep:
+    image: busybox
+    depends_on:
+      mysql:
+        condition: service_healthy
+  server:
+    build: .
+    links:
+      - mysql
+    environment:
+      - SQLALCHEMY_DSN=mysql+pymysql://root:password@mysql:3306/cucumber
+    ports:
+      - "8080"
+    command: run
+    depends_on:
+      - proxy_dep
+
