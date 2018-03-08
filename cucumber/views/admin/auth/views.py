@@ -32,8 +32,8 @@ def login():
                     form.email.data, form.password.data) is True:
                 access_token = login_manager.logged_user(admin)
                 res = redirect(
-                    request.args.get('next') or
-                    url_for('admin_main.dashboard'))
+                    request.args.get('next')
+                    or url_for('admin_main.dashboard'))
                 set_access_cookies(res, access_token)
                 return res
             flash('Invalid administrator information', 'danger')
