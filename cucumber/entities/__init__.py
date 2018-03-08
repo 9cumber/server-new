@@ -6,7 +6,6 @@ from sqlalchemy import BINARY, Column, DateTime, ForeignKey, Integer, Numeric, S
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-
 Base = declarative_base()
 metadata = Base.metadata
 
@@ -34,13 +33,23 @@ class OrderEvent(Base):
     __tablename__ = 'order_events'
 
     id = Column(Integer, primary_key=True)
-    order_id = Column(ForeignKey(u'orders.id', ondelete=u'CASCADE', onupdate=u'CASCADE'), nullable=False, index=True)
-    status = Column(ForeignKey(u'order_statuses.status'), nullable=False, index=True)
+    order_id = Column(
+        ForeignKey(u'orders.id', ondelete=u'CASCADE', onupdate=u'CASCADE'),
+        nullable=False,
+        index=True)
+    status = Column(
+        ForeignKey(u'order_statuses.status'), nullable=False, index=True)
     created_at = Column(DateTime, nullable=False)
     remarks = Column(Text)
 
-    order = relationship(u'Order', primaryjoin='OrderEvent.order_id == Order.id', backref=u'order_events')
-    order_status = relationship(u'OrderStatus', primaryjoin='OrderEvent.status == OrderStatus.status', backref=u'order_events')
+    order = relationship(
+        u'Order',
+        primaryjoin='OrderEvent.order_id == Order.id',
+        backref=u'order_events')
+    order_status = relationship(
+        u'OrderStatus',
+        primaryjoin='OrderEvent.status == OrderStatus.status',
+        backref=u'order_events')
 
 
 class OrderStatus(Base):
@@ -55,39 +64,58 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True)
     book_id = Column(ForeignKey(u'books.id'), nullable=False, index=True)
-    stock_id = Column(ForeignKey(u'stocks.id', ondelete=u'CASCADE', onupdate=u'CASCADE'), index=True)
+    stock_id = Column(
+        ForeignKey(u'stocks.id', ondelete=u'CASCADE', onupdate=u'CASCADE'),
+        index=True)
     user_id = Column(ForeignKey(u'users.id'), nullable=False, index=True)
-    latest_status = Column(ForeignKey(u'order_statuses.status'), nullable=False, index=True)
+    latest_status = Column(
+        ForeignKey(u'order_statuses.status'), nullable=False, index=True)
     created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
-    book = relationship(u'Book', primaryjoin='Order.book_id == Book.id', backref=u'orders')
-    order_status = relationship(u'OrderStatus', primaryjoin='Order.latest_status == OrderStatus.status', backref=u'orders')
-    stock = relationship(u'Stock', primaryjoin='Order.stock_id == Stock.id', backref=u'orders')
-    user = relationship(u'User', primaryjoin='Order.user_id == User.id', backref=u'orders')
+    book = relationship(
+        u'Book', primaryjoin='Order.book_id == Book.id', backref=u'orders')
+    order_status = relationship(
+        u'OrderStatus',
+        primaryjoin='Order.latest_status == OrderStatus.status',
+        backref=u'orders')
+    stock = relationship(
+        u'Stock', primaryjoin='Order.stock_id == Stock.id', backref=u'orders')
+    user = relationship(
+        u'User', primaryjoin='Order.user_id == User.id', backref=u'orders')
 
 
 class Returned(Base):
     __tablename__ = 'returned'
 
     id = Column(Integer, primary_key=True)
-    stock_id = Column(ForeignKey(u'stocks.id', ondelete=u'CASCADE', onupdate=u'CASCADE'), nullable=False, unique=True)
+    stock_id = Column(
+        ForeignKey(u'stocks.id', ondelete=u'CASCADE', onupdate=u'CASCADE'),
+        nullable=False,
+        unique=True)
     remarks = Column(Text)
     created_at = Column(DateTime, nullable=False)
 
-    stock = relationship(u'Stock', primaryjoin='Returned.stock_id == Stock.id', backref=u'returneds')
+    stock = relationship(
+        u'Stock',
+        primaryjoin='Returned.stock_id == Stock.id',
+        backref=u'returneds')
 
 
 class Sold(Base):
     __tablename__ = 'sold'
 
     id = Column(Integer, primary_key=True)
-    stock_id = Column(ForeignKey(u'stocks.id', ondelete=u'CASCADE', onupdate=u'CASCADE'), nullable=False, unique=True)
+    stock_id = Column(
+        ForeignKey(u'stocks.id', ondelete=u'CASCADE', onupdate=u'CASCADE'),
+        nullable=False,
+        unique=True)
     remarks = Column(Text)
     created_at = Column(DateTime, nullable=False)
     price = Column(Numeric(10, 0), nullable=False)
 
-    stock = relationship(u'Stock', primaryjoin='Sold.stock_id == Stock.id', backref=u'solds')
+    stock = relationship(
+        u'Stock', primaryjoin='Sold.stock_id == Stock.id', backref=u'solds')
 
 
 class StockType(Base):
@@ -106,8 +134,12 @@ class Stock(Base):
     updated_at = Column(DateTime, nullable=False)
     price = Column(Numeric(10, 0), nullable=False)
 
-    book = relationship(u'Book', primaryjoin='Stock.book_id == Book.id', backref=u'stocks')
-    stock_type = relationship(u'StockType', primaryjoin='Stock.type == StockType.type', backref=u'stocks')
+    book = relationship(
+        u'Book', primaryjoin='Stock.book_id == Book.id', backref=u'stocks')
+    stock_type = relationship(
+        u'StockType',
+        primaryjoin='Stock.type == StockType.type',
+        backref=u'stocks')
 
 
 class UserType(Base):
@@ -127,4 +159,7 @@ class User(Base):
     created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
-    user_type = relationship(u'UserType', primaryjoin='User.type == UserType.type', backref=u'users')
+    user_type = relationship(
+        u'UserType',
+        primaryjoin='User.type == UserType.type',
+        backref=u'users')
