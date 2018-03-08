@@ -14,6 +14,8 @@ wtforms = "*"
 amaboko = "*"
 sqlalchemy = "*"
 pymysql = "*"
+flask-env = "*"
+six = "*"
 
 
 [dev-packages]
@@ -30,7 +32,6 @@ singledispatch = "*"
 "backports.functools-lru-cache" = "*"
 configparser = "*"
 flask-sqlacodegen = "*"
-
 
 
 [requires]
