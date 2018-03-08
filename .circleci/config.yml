@@ -1,11 +1,10 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: argvc/pipenv-alpine-python2
+    machine: true
 
     steps:
       - checkout
-      - run: sudo apk add --update --no-cache g++ gcc libxslt-dev
-      - run: make deps
-      - run: make test
+
+      - run: docker build -t 9cumber-server
+      - run: docker run --rm -ti  9cumber-server test
