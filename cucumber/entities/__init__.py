@@ -120,14 +120,15 @@ class Order(Base, FetchQueryMixin):
 
     @property
     def latest_order_event(self):
-        # pylint: disable=useless-else-on-loop
-        for order_event in self.order_events:
-            if order_event.status == self.latest_status:
-                return order_event
-        else:
+        import operator
+        if not self.order_events:
+            return None
+        result = max(self.order_events, key=operator.attrgetter('created_at'))
+        if result.status != self.latest_status:
             raise RuntimeError(
                 'A consistency between database and application has been broken'
             )
+        return result
 
 
 class Returned(Base, FetchQueryMixin):
@@ -218,9 +219,7 @@ class User(Base):
         import operator
         if not self.orders:
             return None
-        result = max(self.orders, key=operator.attrgetter('created_at'))
-        assert type(result) is not datetime
-        return result
+        return max(self.orders, key=operator.attrgetter('created_at'))
 
     @property
     def is_uaizu(self):
