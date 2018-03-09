@@ -88,23 +88,20 @@ def book_detail(book_id):
 def orders_list():
     from datetime import datetime
     users = [
-            User(
-                name='Ryoya Komatsu',
-                email='s1220233@gmail.com',
-                ),
-            User(
-                name='Michael Jackson',
-                email='thisisit@google.com')]
+        User(
+            name='Ryoya Komatsu',
+            email='s1220233@gmail.com',
+        ),
+        User(name='Michael Jackson', email='thisisit@google.com')
+    ]
     books = [
-            Book(
-                title='Practical Vim',
-                author='Drew Neil',
-                isbn13='9784048916592',
-                ),
-            Book(
-                title='Bible',
-                author='God',
-                isbn13='123456789012X')]
+        Book(
+            title='Practical Vim',
+            author='Drew Neil',
+            isbn13='9784048916592',
+        ),
+        Book(title='Bible', author='God', isbn13='123456789012X')
+    ]
     orders = reversed([
         Order(
             stock_id=None,
