@@ -2,8 +2,10 @@
 # Copyright © 2015-2018 9cumber Ltd. All Rights Reserved.
 from __future__ import absolute_import, division, print_function, unicode_literals
 import pytest
+from mock import patch
 from tests.conftest import DBCreatorFromSession
-from cucumber.entities import User
+from cucumber.entities import User, Base
+from cucumber.exceptions import UserNotFound
 from datetime import datetime
 
 def test_is_uaizu():
@@ -48,4 +50,28 @@ def test_new():
     assert type(new_admin.updated_at) is datetime
     assert new_admin.created_at == new_admin.updated_at
 
+def test_fetch(Session):
+    session = Session()
+    Base.metadata.create_all(session.get_bind())
+    new_user = User.new('poe', 's999@u-aizu.ac.jp', 'password')
+    session.add(new_user)
+    session.commit()
 
+    with patch('cucumber.entities.db', new_callable=DBCreatorFromSession(Session)):
+        user = User.fetch('s999@u-aizu.ac.jp', 'password')
+        assert user.id == new_user.id
+
+        with pytest.raises(UserNotFound):
+            User.fetch('s999@u-aizu.ac.jp', 'invalid_password')
+
+        with pytest.raises(UserNotFound):
+            User.fetch('s9999@u-aizu.ac.jp', '')
+
+        with pytest.raises(UserNotFound):
+            User.fetch('', 'invalid_password')
+
+        with pytest.raises(UserNotFound):
+            User.fetch('s9999@u-aizu.ac.jp', None)
+
+        with pytest.raises(UserNotFound):
+            User.fetch(None, 'poe')

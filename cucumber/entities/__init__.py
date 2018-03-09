@@ -234,6 +234,6 @@ class User(Base):
     def fetch(cls, email, password):
         # pylint: disable=no-member
         user = db.session.query(User).filter_by(email=email).first()
-        if not user.verify_user(password):
+        if not user or not user.verify_user(password):
             raise UserNotFound
         return user
