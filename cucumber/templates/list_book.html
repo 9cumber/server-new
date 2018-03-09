@@ -58,10 +58,10 @@
                 <td>{{ item.publisher }}</td>
                 <td>{{ item.isbn13 }}</td>
                 <td>{{ item.shelf }}</td>
-                <td>{{ item.price }}</td>
-                <td>{{ item.stocks_quantity }}</td>
-                <td>{{ item.sales_quantity }}</td>
-                <td>{{ item.returns_quantity }}</td>
+                <td>{{ "¥{:,d}".format(item.price) }}</td>
+                <td>{{ "{:,d}".format(item.stocks_quantity) }}</td>
+                <td>{{ "{:,d}".format(item.sales_quantity) }}</td>
+                <td>{{ "{:,d}".format(item.returns_quantity) }}</td>
                 <td>
                   <div class="dropdown">
                     <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
