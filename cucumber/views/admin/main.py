@@ -104,7 +104,6 @@ def book_detail(book_id):
 @admin_main.route('/orders/list', methods=['GET'])
 @login_manager.admin_required
 def orders_list():
-    from datetime import datetime
     users = [
         User(
             name='Ryoya Komatsu',
