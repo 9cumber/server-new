@@ -16,3 +16,12 @@ def test_is_uaizu():
     assert not User(email='').is_uaizu 
     assert not User(email=None).is_uaizu 
     assert not User(email='@').is_uaizu 
+
+def test_verify_user():
+    new_user = User.new('poe', 's999@u-aizu.ac.jp', 'password')
+    assert new_user.verify_user('password')
+    assert new_user.verify_user(str('password'))
+    assert new_user.verify_user(unicode('password'))
+    assert not new_user.verify_user(None)
+    assert not new_user.verify_user('')
+    assert not new_user.verify_user('password\0')

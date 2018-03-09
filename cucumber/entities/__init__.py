@@ -213,7 +213,7 @@ class User(Base):
     def verify_user(self, password):
         try:
             return bcrypt.check_password_hash(self.password, password)
-        except ValueError:
+        except (ValueError, TypeError):
             return False
 
     @classmethod
