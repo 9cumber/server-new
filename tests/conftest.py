@@ -12,6 +12,16 @@ TEST_FOLDER = pathlib.Path(__file__).parent
 def _register_sys_path():
     sys.path.append(str(TEST_FOLDER))
 
+
+@pytest.fixture(scope="function")
+def cucumber_app():
+    from cucumber.app import create_app
+    try:
+        return create_app()
+    except KeyError:
+        # AmazonSerarch の Configが不十分の場合
+        pass
+
 @pytest.fixture(scope="function")
 def Session():
     from sqlalchemy.orm import sessionmaker
