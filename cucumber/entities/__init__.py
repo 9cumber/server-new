@@ -218,7 +218,7 @@ class User(Base):
         import operator
         if not self.orders:
             return None
-        result = max(self.orders, key=operator.attrgetter('id'))
+        result = max(self.orders, key=operator.attrgetter('created_at'))
         assert type(result) is not datetime
         return result
 

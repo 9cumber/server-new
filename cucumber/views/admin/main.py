@@ -58,10 +58,13 @@ def dashboard():
 
     # 本来のステート遷移をせずに、テスト用に必要なステートのみを取っている
     def prepare(user_1):
-        user_1_order = Order(latest_status="引き取り待機", created_at=now, updated_at=now)
-        user_1_order.stock = Stock(type='instock', created_at=now, updated_at=now, price=5948)
+        user_1_order = Order(
+            latest_status="引き取り待機", created_at=now, updated_at=now)
+        user_1_order.stock = Stock(
+            type='instock', created_at=now, updated_at=now, price=5948)
         user_1_order.book = book
-        user_1_order.order_events.append(OrderEvent(status='引き取り待機', created_at=now))
+        user_1_order.order_events.append(
+            OrderEvent(status='引き取り待機', created_at=now))
         user_1.orders.append(user_1_order)
 
     prepare(user_1)
