@@ -4,7 +4,12 @@
     <a href="{{ url_for('admin_main.dashboard') }}" class="navbar-brand btn-default">Admin proto</a>
   </div>
   <ul class="nav navbar-nav navbar-right" id="sign-out">
+    <li><a>{{ user.email }}</a></li>
+    {% if user %}
     <li><a href="{{ url_for('admin_auth.logout') }}">Sign Out</a></li>
+    {% else %}
+    <li><a href="{{ url_for('admin_auth.login') }}">Sign In</a></li>
+    {% endif %}
   </ul>
 </div>
 </div>
