@@ -4,11 +4,10 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 from flask import url_for, render_template, redirect, flash, Blueprint
 from cucumber.views.forms import UserForm
-from cucumber.entities import Order, User, Book
+from cucumber.entities import Order, User, Book, OrderEvent, Stock
 from datetime import datetime
 
 from mock import MagicMock
-from cucumber.entities import Book, User, Order, OrderEvent, Stock
 
 Stock = MagicMock()
 Returned = MagicMock()
