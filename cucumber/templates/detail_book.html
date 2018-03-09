@@ -23,21 +23,18 @@
 
         {% include "components/sidebar.html" %}
 
-
         <div class="col-sm-10">
-          <blockquote>
-            <p>作品概要</p>
-          </blockquote>
+            <h2>書籍概要</h2>
 
           <div class="col-sm-4" id="book-img">
             <div class="frame">
-              <img src="./picture/05.jpg" alt="本の画像" class="shadow">
+              <img src="{{ book.picture }}" alt="{{book.title}}の画像" class="shadow">
             </div>
           </div>
 
           <div class="col-sm-5" id="book-info">
             <div id="intro">
-              ここに本の概要
+              {{book.description}}
             </div>
 
           </div>
