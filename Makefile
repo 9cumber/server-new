@@ -22,7 +22,7 @@ test-pytest:
 	pipenv run pytest
 
 test-pylint:
-	pipenv run pylint cucumber
+	pipenv run pylint cucumber tests
 
 test-yapf:
 	test $(shell pipenv run yapf --diff -r cucumber | wc -l) -eq 0
