@@ -4,15 +4,14 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 from flask import url_for, render_template, redirect, flash, Blueprint
 from cucumber.views.forms import UserForm
+from cucumber.entities import Order, User, Book
 from datetime import datetime
 
 from mock import MagicMock
-from cucumber.entities import Book
 
 Stock = MagicMock()
-ReturnedStock = MagicMock()
-SoldStock = MagicMock()
-ReservedInfo = MagicMock()
+Returned = MagicMock()
+Sold = MagicMock()
 
 from cucumber.modules.login_manager import AdminUnauthorized
 from cucumber.extensions import login_manager
@@ -102,6 +101,46 @@ def book_detail(book_id):
         'detail_book.html', book=book, user=login_manager.get_logged_user())
 
 
+@admin_main.route('/orders/list', methods=['GET'])
+@login_manager.admin_required
+def orders_list():
+    users = [
+        User(
+            name='Ryoya Komatsu',
+            email='s1220233@gmail.com',
+        ),
+        User(name='Michael Jackson', email='thisisit@google.com')
+    ]
+    books = [
+        Book(
+            title='Practical Vim',
+            author='Drew Neil',
+            isbn13='9784048916592',
+        ),
+        Book(title='Bible', author='God', isbn13='123456789012X')
+    ]
+    orders = reversed([
+        Order(
+            stock_id=None,
+            user_id='1',
+            latest_status='引き取り済み',
+            created_at=datetime.now(),
+            user=users[0],
+            book=books[0]),
+        Order(
+            stock_id=None,
+            user_id='2',
+            latest_status='仕入れ却下',
+            created_at=datetime.now(),
+            user=users[1],
+            book=books[1])
+    ])
+    return render_template(
+        'list_orders.html',
+        orders=orders,
+        user=login_manager.get_logged_user())
+
+
 def base_list_view_function(stock, model):
     def func():
         lists = model.fetch_all()
@@ -115,17 +154,13 @@ def base_list_view_function(stock, model):
 
 
 stock_list_view_function = base_list_view_function('stock', Stock)
-returned_list_view_function = base_list_view_function('returned',
-                                                      ReturnedStock)
-sold_list_view_function = base_list_view_function('sold', SoldStock)
-reserved_list_view_function = base_list_view_function('reserved', ReservedInfo)
+returned_list_view_function = base_list_view_function('returned', Returned)
+sold_list_view_function = base_list_view_function('sold', Sold)
 
 admin_main.add_url_rule('/stock/list', view_func=stock_list_view_function)
 admin_main.add_url_rule(
     '/returned/list', view_func=returned_list_view_function)
 admin_main.add_url_rule('/sold/list', view_func=sold_list_view_function)
-admin_main.add_url_rule(
-    '/reserved/list', view_func=reserved_list_view_function)
 
 
 def base_registration_view_function(stock):
