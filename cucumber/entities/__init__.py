@@ -46,6 +46,21 @@ class Book(Base, FetchQueryMixin):
     created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
+    @property
+    def stocks_quantity(self):
+        import random
+        return random.randint(1, 10000)
+
+    @property
+    def returns_quantity(self):
+        import random
+        return random.randint(1, 10000)
+
+    @property
+    def sales_quantity(self):
+        import random
+        return random.randint(1, 10000)
+
 
 class OrderEvent(Base, FetchQueryMixin):
     __tablename__ = 'order_events'
