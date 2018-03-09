@@ -29,12 +29,10 @@
           </blockquote>
 
           {% include "components/form_search.html" %}
-
           <table class="table table-striped table-bordered table-hover" id="page-1">
             <thead>
               <tr>
-                <th rowspan="2">BookID</th>
-                <th colspan="3">タイトル</th>
+                <th colspan="3">本のタイトル</th>
                 <th colspan="3">著者</th>
                 <th colspan="3">出版社</th>
                 <th rowspan="2" class="edit-th">編集</th>
@@ -43,7 +41,7 @@
                 <th colspan="2">ISBN</th>
                 <th colspan="2">棚コード</th>
                 <th colspan="2">価格</th>
-                <th>在庫(取置)</th>
+                <th>在庫(含取置)</th>
                 <th>売上数</th>
                 <th>返却数</th>
               </tr>
@@ -51,7 +49,6 @@
             <tbody>
               {% for item in lists %}
               <tr>
-                <td rowspan="2" class="col-sm-1 td-link" data-href="./admin_book_detail.html">{{ item.id }}</td>
                 <td colspan="3" class="td-link" data-href="./admin_book_detail.html">{{ item.title }}</td>
                 <td colspan="3">{{ item.author }}</td>
                 <td colspan="3">{{ item.publisher }}</td>
