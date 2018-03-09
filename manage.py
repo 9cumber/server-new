@@ -3,6 +3,7 @@
 # Copyright © 2015-2018 9cumber Ltd. All Rights Reserved.
 from __future__ import absolute_import, division, print_function
 import os
+import sys
 import click
 from flask.cli import FlaskGroup
 
@@ -22,7 +23,7 @@ def cli():
 def add_admin(email, password):
     if email is None or password is None:
         print("Usage: manage.py add_admin --email=ADMIN_EMAIL --password=ADMIN_PASSWORD")
-        sys.exit()
+        sys.exit(1)
     print("New admin:\n\temail\t: %s\n\tpass\t: %s" % (email, password))
     from cucumber.entities import User
     from cucumber.extensions import db

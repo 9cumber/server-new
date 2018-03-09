@@ -107,3 +107,4 @@ lib/
 requirements.txt
 
 env.sh
+.pytest_cache/

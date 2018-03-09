@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='9cumber server',
+    name='cucumber',
     author='Yuki Mukasa',
     author_email='info@arg.vc',
     packages=find_packages(exclude=('tests',)),
