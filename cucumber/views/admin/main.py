@@ -41,7 +41,8 @@ def book_list():
     books = [
         Book(
             id=1,
-            title='The Practice of Programming (Addison-Wesley Professional Computing Series) ',
+            title=
+            'The Practice of Programming (Addison-Wesley Professional Computing Series) ',
             author='Brian W. Pike, Rob Kernighan',
             publisher='Addison-Wesley Professional',
             isbn13='9780201615869',
@@ -50,7 +51,8 @@ def book_list():
             reldate=datetime.utcnow(),
             shelf='shelf-1',
             classify='classify-2',
-            description='With the same insight and authority that made their book The Unix Programming Environment a classic, Brian Kernighan and Rob Pike have written The Practice of Programming to help make individual programmers more effective and productive.',
+            description=
+            'With the same insight and authority that made their book The Unix Programming Environment a classic, Brian Kernighan and Rob Pike have written The Practice of Programming to help make individual programmers more effective and productive.',
             picture=
             'https://images-fe.ssl-images-amazon.com/images/I/41SUHlT7ovL._AC_SY200_.jpg'
         ),
@@ -78,7 +80,7 @@ def book_list():
 @admin_main.route('/book/<int:book_id>/detail', methods=['GET'])
 @login_manager.admin_required
 def book_detail(book_id):
-    book = Book.fetch(id=book_id)
+    book = Book.fetch(book_id)
     return render_template(
         'detail_book.html', book=book, user=login_manager.get_logged_user())
 
