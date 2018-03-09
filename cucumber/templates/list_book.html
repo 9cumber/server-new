@@ -72,11 +72,11 @@
               </tr>
               <tr>
                 <td colspan="2">{{ item.isbn13 }}</td>
-                <td colspan="2">shelf codes</td>
+                <td colspan="2">{{ item.shelf }}</td>
                 <td colspan="2">{{ item.price }}</td>
-                <td >100(50)</td>
-                <td >50</td>
-                <td >50</td>
+                <td >{{ item.stocks_quantity }}</td>
+                <td >{{ item.sales_quantity }}</td>
+                <td >{{ item.returns_quantity }}</td>
               </tr>
               {% endfor %}
             </tbody>

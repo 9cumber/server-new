@@ -6,8 +6,8 @@ from flask import url_for, render_template, redirect, flash, Blueprint
 from cucumber.views.forms import UserForm
 
 from mock import MagicMock
+from cucumber.entities import Book
 
-Book = MagicMock()
 Stock = MagicMock()
 ReturnedStock = MagicMock()
 SoldStock = MagicMock()
@@ -36,10 +36,43 @@ def dashboard():
 @admin_main.route('/book/list', methods=['GET'])
 @login_manager.admin_required
 def book_list():
+    books = Book.fetch_all()
+    from datetime import datetime
+    books = [
+        Book(
+            id=1,
+            title='The Practice of Programming (Addison-Wesley Professional Computing Series) ',
+            author='Brian W. Pike, Rob Kernighan',
+            publisher='Addison-Wesley Professional',
+            isbn13='9780201615869',
+            language='us',
+            price='5948',
+            reldate=datetime.utcnow(),
+            shelf='shelf-1',
+            classify='classify-2',
+            description='With the same insight and authority that made their book The Unix Programming Environment a classic, Brian Kernighan and Rob Pike have written The Practice of Programming to help make individual programmers more effective and productive.',
+            picture=
+            'https://images-fe.ssl-images-amazon.com/images/I/41SUHlT7ovL._AC_SY200_.jpg'
+        ),
+        Book(
+            id=2,
+            title='title',
+            author='author',
+            publisher='publisher',
+            isbn13='1234567890123',
+            language='jp',
+            price='1000',
+            reldate=datetime.utcnow(),
+            shelf='1',
+            classify='2',
+            description='description',
+            picture=
+            'https://images-fe.ssl-images-amazon.com/images/I/41SUHlT7ovL._AC_SY200_.jpg'
+        )
+    ]
+
     return render_template(
-        'list_book.html',
-        lists=Book.fetch_all(),
-        user=login_manager.get_logged_user())
+        'list_book.html', lists=books, user=login_manager.get_logged_user())
 
 
 @admin_main.route('/book/detail/<int:book_id>', methods=['GET'])
