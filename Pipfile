@@ -34,6 +34,7 @@ singledispatch = "*"
 "backports.functools-lru-cache" = "*"
 configparser = "*"
 flask-sqlacodegen = "*"
+pathlib = "*"
 
 
 [requires]

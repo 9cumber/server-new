@@ -275,6 +275,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cucumber`;
+INSERT INTO `cucumber`.`stock_types` (`type`) VALUES ('instock');
 INSERT INTO `cucumber`.`stock_types` (`type`) VALUES ('returned');
 INSERT INTO `cucumber`.`stock_types` (`type`) VALUES ('sold');
 INSERT INTO `cucumber`.`stock_types` (`type`) VALUES ('reserved');

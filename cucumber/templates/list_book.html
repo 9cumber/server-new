@@ -25,7 +25,7 @@
 
         <div class="col-sm-10">
           <blockquote>
-            <p>在庫一覧</p>
+            <p>書籍一覧</p>
           </blockquote>
 
           {% include "components/form_search.html" %}
@@ -33,18 +33,28 @@
           <table class="table table-striped table-bordered table-hover" id="page-1">
             <thead>
               <tr>
-                <th>BookID</th>
-                <th colspan="2"></th>
-                <th colspan="2"></th>
-                <th>編集</th>
+                <th rowspan="2">BookID</th>
+                <th colspan="3">タイトル</th>
+                <th colspan="3">著者</th>
+                <th colspan="3">出版社</th>
+                <th rowspan="2" class="edit-th">編集</th>
+              </tr>
+              <tr>
+                <th colspan="2">ISBN</th>
+                <th colspan="2">棚コード</th>
+                <th colspan="2">価格</th>
+                <th>在庫(取置)</th>
+                <th>売上数</th>
+                <th>返却数</th>
               </tr>
             </thead>
             <tbody>
               {% for item in lists %}
               <tr>
-                <td rowspan="2" class="col-sm-1">1</td>
-                <td colspan="2">{{ item.book.title }}</td>
-                <td colspan="2">{{ item.book.author }}</td>
+                <td rowspan="2" class="col-sm-1 td-link" data-href="./admin_book_detail.html">{{ item.id }}</td>
+                <td colspan="3" class="td-link" data-href="./admin_book_detail.html">{{ item.title }}</td>
+                <td colspan="3">{{ item.author }}</td>
+                <td colspan="3">{{ item.publisher }}</td>
                 <td rowspan="2" class="edit-table col-sm-1">
                   <div class="dropdown">
                     <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -61,14 +71,17 @@
                 </td>
               </tr>
               <tr>
-                <td >{{ item.book.publisher }}</td>
-                <td >{{ item.book.isbn13 }}</td>
-                <td >{{ item.saleprice }}</td>
-                <td >{{ item.created_at }}</td>
+                <td colspan="2">{{ item.isbn13 }}</td>
+                <td colspan="2">shelf codes</td>
+                <td colspan="2">{{ item.price }}</td>
+                <td >100(50)</td>
+                <td >50</td>
+                <td >50</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
+
           <nav>
             <ul class="pagination pagination-lg">
               <li>
