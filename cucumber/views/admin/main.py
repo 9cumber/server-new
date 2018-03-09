@@ -4,7 +4,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 from flask import url_for, render_template, redirect, flash, Blueprint
 from cucumber.views.forms import UserForm
-from cucumber.entities import Order, OrderStatus, OrderEvent, User, Book, Stock, Returned, Sold, StockType
+from cucumber.entities import Order, User, Book, Stock, Returned, Sold
 
 from cucumber.modules.login_manager import AdminUnauthorized
 from cucumber.extensions import login_manager
@@ -47,8 +47,21 @@ def book_detail(book_id):
 @login_manager.admin_required
 def orders_list():
     from datetime import datetime
-    orders = [Order(id='1', book_id='id123456', stock_id=None, user_id='uid123456', latest_status='引き取り済み', created_at=datetime.now(), user=User(email='hoge@gmail.com'), book=Book(title='Bible'))]
-    return render_template('list_orders.html', orders=orders, user=login_manager.get_logged_user())
+    orders = [
+        Order(
+            id='1',
+            book_id='id123456',
+            stock_id=None,
+            user_id='uid123456',
+            latest_status='引き取り済み',
+            created_at=datetime.now(),
+            user=User(email='hoge@gmail.com'),
+            book=Book(title='Bible'))
+    ]
+    return render_template(
+        'list_orders.html',
+        orders=orders,
+        user=login_manager.get_logged_user())
 
 
 def base_list_view_function(stock, model):
@@ -62,8 +75,9 @@ def base_list_view_function(stock, model):
     func.__name__ = str('list_' + stock)
     return login_manager.admin_required(func)
 
+
 stock_list_view_function = base_list_view_function('stock', Stock)
-returned_list_view_function = base_list_view_function('returned',Returned)
+returned_list_view_function = base_list_view_function('returned', Returned)
 sold_list_view_function = base_list_view_function('sold', Sold)
 #reserved_list_view_function = base_list_view_function('reserved', ReservedInfo)
 
@@ -71,6 +85,7 @@ admin_main.add_url_rule('/stock/list', view_func=stock_list_view_function)
 admin_main.add_url_rule(
     '/returned/list', view_func=returned_list_view_function)
 admin_main.add_url_rule('/sold/list', view_func=sold_list_view_function)
+
 #admin_main.add_url_rul(e'/reserved/list', view_func=reserved_list_view_function)
 
 
