@@ -29,8 +29,23 @@ def index():
 @admin_main.route('/dashboard', methods=['GET'])
 @login_manager.admin_required
 def dashboard():
+    admonition_users_over_3_days = [
+        User.new('over 3days man', 'over_3days_man_1@u-aizu.ac.jp',
+                 'password'),
+        User.new('over_3days_man_2', 'over_3days_man_2@u-aizu.ac.jp',
+                 'password')
+    ]
+    admonition_users_over_7_days = [
+        User.new('over 7days man', 'over_7days_man_1@u-aizu.ac.jp',
+                 'password'),
+        User.new('over_7days_man_2', 'over_7days_man_2@u-aizu.ac.jp',
+                 'password')
+    ]
     return render_template(
-        'admin_dashboard.html', user=login_manager.get_logged_user())
+        'admin_dashboard.html',
+        user=login_manager.get_logged_user(),
+        admonition_users_over_3_days=admonition_users_over_3_days,
+        admonition_users_over_7_days=admonition_users_over_7_days)
 
 
 @admin_main.route('/book/list', methods=['GET'])
