@@ -12,8 +12,22 @@ from cucumber.exceptions import UserNotFound
 Base = declarative_base()
 metadata = Base.metadata
 
+class FetchQueryMixin(object):
 
-class Book(Base):
+    @classmethod
+    def make_query(cls, primary_key):
+        return db.session.query(cls).filter_by(id=primary_key)
+
+    @classmethod
+    def fetch(cls, primary_key):
+        return cls.make_query(primary_key).first()
+
+    @classmethod
+    def fetch_all(cls, primary_key):
+        return cls.make_query(primary_key).all()
+
+
+class Book(Base, FetchQueryMixin):
     __tablename__ = 'books'
 
     id = Column(Integer, primary_key=True)
@@ -32,7 +46,7 @@ class Book(Base):
     updated_at = Column(DateTime, nullable=False)
 
 
-class OrderEvent(Base):
+class OrderEvent(Base, FetchQueryMixin):
     __tablename__ = 'order_events'
 
     id = Column(Integer, primary_key=True)
@@ -62,7 +76,7 @@ class OrderStatus(Base):
     status_group = Column(Integer, primary_key=True, nullable=False)
 
 
-class Order(Base):
+class Order(Base, FetchQueryMixin):
     __tablename__ = 'orders'
 
     id = Column(Integer, primary_key=True)
@@ -88,7 +102,7 @@ class Order(Base):
         u'User', primaryjoin='Order.user_id == User.id', backref=u'orders')
 
 
-class Returned(Base):
+class Returned(Base, FetchQueryMixin):
     __tablename__ = 'returned'
 
     id = Column(Integer, primary_key=True)
@@ -105,7 +119,7 @@ class Returned(Base):
         backref=u'returneds')
 
 
-class Sold(Base):
+class Sold(Base, FetchQueryMixin):
     __tablename__ = 'sold'
 
     id = Column(Integer, primary_key=True)
@@ -127,7 +141,7 @@ class StockType(Base):
     type = Column(String(63), primary_key=True)
 
 
-class Stock(Base):
+class Stock(Base, FetchQueryMixin):
     __tablename__ = 'stocks'
 
     id = Column(Integer, primary_key=True)
