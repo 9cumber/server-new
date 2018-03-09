@@ -32,36 +32,38 @@
           <h3 class="text-danger">7日経過</h3>
           <table class="table table-striped table-bordered table-hover">
             <thead>
+
               <tr>
-                <th>ID</th>
-                <th>Name</th>
+                <th colspan=2>顧客情報</th>
+                <th colspan=3>書籍情報</th>
+                <th colspan=1>取り置き情報</th>
+              </tr>
+              <tr>
+                <th>名前</th>
+                <th>メールアドレス</th>
+                <th>名前</th>
+                <th>著者名</th>
+                <th>ISBN13</th>
+                <th>引取開始日</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>@s1220aaa</td><td>aaaaaaaaa</td></tr>
-              <tr><td>@s1220bbb</td><td>bbbbbbbbb</td></tr>
-              <tr><td>@s1220ccc</td><td>ccccccccc</td></tr>
-              <tr><td>@s1220ddd</td><td>ddddddddd</td></tr>
+              {% for user in admonition_users_over_7_days %}
+              <tr>
+                <td> {user.user.name} </td>
+                <td> {user.user.email} </td>
+                <td> {user.latest_order.book.name} </td>
+                <td> {user.latest_order.book.author} </td>
+                <td> {user.latest_order.book.isbn13} </td>
+                <td> {user.latest_order.latest_order_events.created_at} </td>
+              </tr>
+              {% endfor %}
             </tbody>
           </table>
 
           <br>
 
           <h3 class="text-warning">3日経過</h3>
-          <table class="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>@s1220www</td><td>wwwwwwwww</td></tr>
-              <tr><td>@s1220xxx</td><td>xxxxxxxxx</td></tr>
-              <tr><td>@s1220yyy</td><td>yyyyyyyyy</td></tr>
-              <tr><td>@s1220zzz</td><td>zzzzzzzzz</td></tr>
-            </tbody>
-          </table>
 
         </div>
 

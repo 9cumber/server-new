@@ -6,7 +6,7 @@ from flask import url_for, render_template, redirect, flash, Blueprint
 from cucumber.views.forms import UserForm
 
 from mock import MagicMock
-from cucumber.entities import Book
+from cucumber.entities import Book, User
 
 Stock = MagicMock()
 ReturnedStock = MagicMock()
