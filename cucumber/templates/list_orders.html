@@ -37,13 +37,13 @@ $(document).ready(function(){
   $('#stock_group_input').val(location.search.slice(-1));
 });
           </script>
-
-          <select class="form-control input" id="stock_group_input" name="stock_group_input" data-style="btn-sm btn-default" style="width:200px;">
+          <label style="font-weight:normal;">
+          <select class="form-control input-sm" id="stock_group_input" name="stock_group_input">
             <option value=0>全て</option>
             <option value=2>進行中</option>
             <option value=1>引き取り済み</option>
             <option value=4>却下済み</option>
-          </select>
+          </select> の取置・取寄依頼を表示</label>
           <script>
 $('#stock_group_input').on('change', function(){
   var group = $('[name=stock_group_input]').val();
