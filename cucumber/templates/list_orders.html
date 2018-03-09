@@ -25,7 +25,7 @@
 
         <div class="col-sm-10">
           <blockquote>
-            <p>取置予約一覧</p>
+            <p>取置・取寄依頼一覧</p>
           </blockquote>
 
           {% include "components/form_search.html" %}
@@ -42,12 +42,13 @@
               </tr>
             </thead>
             <tbody>
+              {% for i in orders %}
               <tr>
-                <td class="col-sm-1 td-link" data-href="./admin_book_detail.html">1</td>
-                <td class="td-link" data-href="./admin_book_detail.html">あいうえおかけこ</td>
-                <td>adfjkjafkl@.....</td>
-                <td>20xx/yy/zz</td>
-                <td>20xx/aa/bb</td>
+                <td class="col-sm-1 td-link" data-href="./admin_book_detail.html">{{ i.id }}</td>
+                <td class="td-link" data-href="./admin_book_detail.html">{{ i.book.title }}</td>
+                <td>{{ i.user.email }}</td>
+                <td>{{ i.created_at }}</td>
+                <td></td>
                 <td class="edit-table col-sm-1">
                   <div class="dropdown">
                     <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,6 +64,7 @@
                   </div>
                 </td>
               </tr>
+              {% endfor %}
 
               <tr>
                 <td class="td-link" data-href="./admin_book_detail.html">2</td>
