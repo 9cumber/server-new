@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from flask import Flask, request, current_app
 from flask_jwt_extended import JWTManager, set_access_cookies, unset_jwt_cookies
 from cucumber.modules.login_manager import LoginManager,UserUnauthorized, AdminUnauthorized, BaseUserManager
+import pytest
 
 class User(object):
     is_admin = False
@@ -17,7 +18,7 @@ USERS = {1: User, 2: Admin}
 
 class UserManager(BaseUserManager):
     @staticmethod
-    def get_user_id(user):
+    def get_id_in_user(user):
         return int(user.id)
 
     @staticmethod
@@ -29,22 +30,23 @@ class UserManager(BaseUserManager):
         return USERS[int(user_id)]
 
 
-def setup():
-    app = Flask('login_manager')
-    app.config['SECRET_KEY'] = '1234'
-    app.config['JWT_TOKEN_LOCATION'] = 'cookies'
+@pytest.fixture(scope="function")
+def app():
+    flask_app = Flask('login_manager')
+    flask_app.config['SECRET_KEY'] = '1234'
+    flask_app.config['JWT_TOKEN_LOCATION'] = 'cookies'
 
-    jwt = JWTManager(app)
-    login_manager = LoginManager(app, UserManager)
-    app_context = app.app_context()
+    jwt = JWTManager(flask_app)
+    login_manager = LoginManager(flask_app, UserManager)
+    app_context = flask_app.app_context()
     app_context.push()
 
 
-    @app.route('/public')
+    @flask_app.route('/public')
     def public():
         return 'public', 200
 
-    @app.route('/login', methods=['POST'])
+    @flask_app.route('/login', methods=['POST'])
     def login():
         user_id = request.form.get('user_id', type=int)
         try:
@@ -58,13 +60,13 @@ def setup():
         set_access_cookies(resp, access_token)
         return resp, 200
 
-    @app.route('/logout', methods=['POST'])
+    @flask_app.route('/logout', methods=['POST'])
     def logout():
         resp = current_app.make_response('logout')
         unset_jwt_cookies(resp)
         return resp, 200
 
-    @app.route('/user_optional')
+    @flask_app.route('/user_optional')
     @login_manager.user_optional
     def user_optional():
         if login_manager.is_logged_admin:
@@ -76,23 +78,24 @@ def setup():
         else:
             return 'user_optional_non_user', 200
 
-    @app.route('/user_required')
+    @flask_app.route('/user_required')
     @login_manager.user_required
     def user_required():
         return 'user_required', 200
 
-    @app.route('/admin_required')
+    @flask_app.route('/admin_required')
     @login_manager.admin_required
     def admin_required():
         return 'admin_required', 200
 
-    @app.errorhandler(UserUnauthorized)
+    @flask_app.errorhandler(UserUnauthorized)
     def user_unauthorized(_):
         return 'not user', 401
 
-    @app.errorhandler(AdminUnauthorized)
+    @flask_app.errorhandler(AdminUnauthorized)
     def admin_unauthorized(_):
         return 'not admin', 403
+    return flask_app
 
 
 def test_non_user(app):
