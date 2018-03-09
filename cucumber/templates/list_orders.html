@@ -47,7 +47,7 @@ $(document).ready(function(){
             <script>
 $('#stock_group_input').on('change', function(){
   var group = $('[name=stock_group_input]').val();
-  window.location = `/admin/order/list?group=${group}`;
+  window.location = `{{ url_for('admin_main.orders_list') }}?group=${group}`;
 });
             </script>
 
@@ -71,7 +71,7 @@ $('#stock_group_input').on('change', function(){
               </thead>
               <tbody>
                 {% for i in orders %}
-                <tr onclick="location.href = '/admin/order/{{ i.id }}/detail'">
+                <tr onclick="location.href = '{{ url_for("admin_main.order_detail",order_id=i.id) }}'">
                   <td>{{ i.book.title }}</td>
                   <td>{{ i.book.author }}</td>
                   <td>{{ i.book.isbn13 }}</td>

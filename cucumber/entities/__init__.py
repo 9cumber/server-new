@@ -75,6 +75,18 @@ class OrderEvent(Base, FetchQueryMixin):
     created_at = Column(DateTime, nullable=False)
     remarks = Column(Text)
 
+    @property
+    def is_finished(self):
+        return self.order_status.status_group == 1
+
+    @property
+    def is_rejected(self):
+        return self.order_status.status_group == 4
+
+    @property
+    def is_inprogress(self):
+        return self.order_status.status_group == 2 or self.order_status.status_group == 3
+
     order = relationship(
         u'Order',
         primaryjoin='OrderEvent.order_id == Order.id',

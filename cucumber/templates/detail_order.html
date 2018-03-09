@@ -78,9 +78,9 @@
             </thead>
             <tbody>
               {% for i in events %}
-              {% if i.order_status.status_group == 1 %}
+              {% if i.is_finished %}
               {% set g = "success" %}
-              {% elif i.order_status.status_group == 4 %}
+              {% elif i.is_rejected %}
               {% set g = "danger" %}
               {% elif loop.index == events|length %}
               {% set g = "info" %}
