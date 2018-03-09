@@ -82,24 +82,25 @@ def book_list():
 def book_detail(book_id):
     book = Book.fetch(book_id)
     book = Book(
-            id=1,
-            title=
-            'The Practice of Programming (Addison-Wesley Professional Computing Series) ',
-            author='Brian W. Pike, Rob Kernighan',
-            publisher='Addison-Wesley Professional',
-            isbn13='9780201615869',
-            language='us',
-            price='5948',
-            reldate=datetime.utcnow(),
-            shelf='shelf-1',
-            classify='classify-2',
-            description=
-            'With the same insight and authority that made their book The Unix Programming Environment a classic, Brian Kernighan and Rob Pike have written The Practice of Programming to help make individual programmers more effective and productive.',
-            picture=
-            'https://images-fe.ssl-images-amazon.com/images/I/41SUHlT7ovL._AC_SY200_.jpg'
-        )
+        id=1,
+        title=
+        'The Practice of Programming (Addison-Wesley Professional Computing Series) ',
+        author='Brian W. Pike, Rob Kernighan',
+        publisher='Addison-Wesley Professional',
+        isbn13='9780201615869',
+        language='us',
+        price='5948',
+        reldate=datetime.utcnow(),
+        shelf='shelf-1',
+        classify='classify-2',
+        description=
+        'With the same insight and authority that made their book The Unix Programming Environment a classic, Brian Kernighan and Rob Pike have written The Practice of Programming to help make individual programmers more effective and productive.',
+        picture=
+        'https://images-fe.ssl-images-amazon.com/images/I/41SUHlT7ovL._AC_SY200_.jpg'
+    )
     return render_template(
         'detail_book.html', book=book, user=login_manager.get_logged_user())
+
 
 def base_list_view_function(stock, model):
     def func():
