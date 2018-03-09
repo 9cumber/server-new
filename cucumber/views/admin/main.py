@@ -139,14 +139,11 @@ def base_list_view_function(stock, model):
 stock_list_view_function = base_list_view_function('stock', Stock)
 returned_list_view_function = base_list_view_function('returned', Returned)
 sold_list_view_function = base_list_view_function('sold', Sold)
-#reserved_list_view_function = base_list_view_function('reserved', ReservedInfo)
 
 admin_main.add_url_rule('/stock/list', view_func=stock_list_view_function)
 admin_main.add_url_rule(
     '/returned/list', view_func=returned_list_view_function)
 admin_main.add_url_rule('/sold/list', view_func=sold_list_view_function)
-
-#admin_main.add_url_rul(e'/reserved/list', view_func=reserved_list_view_function)
 
 
 def base_registration_view_function(stock):
