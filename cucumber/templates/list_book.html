@@ -61,11 +61,10 @@
                       <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <li class="dropdown-item"><a href="#">編集</a></li>
-                      <li class="dropdown-item"><a href="#">返品変換</a></li>
-                      <li class="dropdown-item"><a href="#">売上変換</a></li>
-                      <li class="dropdown-item"><a href="#">取り置き登録</a></li>
-                      <li class="dropdown-item"><a href="#" style="color:red">削除</a></li>
+                      <li class="dropdown-item"><a href="{{ url_for('admin_main.book_detail', book_id=item.id) }}">編集</a></li>
+                      <li class="dropdown-item"><a href="{{ url_for('admin_main.register_stock', book_id=item.id) }}">返品登録</a></li>
+                      <li class="dropdown-item"><a href="{{ url_for('admin_main.register_sold', book_id=item.id) }}">売上登録</a></li>
+                      <li class="dropdown-item"><a href="{{ url_for('admin_main.register_returned', book_id=item.id) }}">取り置き登録</a></li>
                     </ul>
                   </div>
                 </td>

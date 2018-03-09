@@ -75,7 +75,7 @@ def book_list():
         'list_book.html', lists=books, user=login_manager.get_logged_user())
 
 
-@admin_main.route('/book/detail/<int:book_id>', methods=['GET'])
+@admin_main.route('/book/<int:book_id>/detail', methods=['GET'])
 @login_manager.admin_required
 def book_detail(book_id):
     book = Book.fetch(id=book_id)
