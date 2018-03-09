@@ -12,9 +12,7 @@ def common_lookup_book(amazon):
     assert new_book.ean == "9784048916592"
 
 def test_lookup_book_using_app_config(cucumber_app):
-    if ('API_ACCESS_KEY' not in cucumber_app.config or
-            'API_SECRET_KEY' not in cucumber_app.config or
-            'ASSOCIATE_ID' not in cucumber_app.config ):
+    if not cucumber_app:
         pytest.skip("Not given ACCESS_KEY, SECRET_KEY, ASSOCIATE_ID")
     from cucumber.extensions import amazon
     common_lookup_book(amazon)
