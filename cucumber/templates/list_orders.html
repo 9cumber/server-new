@@ -35,9 +35,10 @@
               <tr>
                 <th>BookID</th>
                 <th>タイトル</th>
+                <th>氏名</th>
                 <th>メールアドレス</th>
                 <th>取置依頼日</th>
-                <th>取置期限</th>
+                <th>進捗状況</th>
                 <th class="edit-th">編集</th>
               </tr>
             </thead>
@@ -46,94 +47,18 @@
               <tr>
                 <td class="col-sm-1 td-link" data-href="./admin_book_detail.html">{{ i.id }}</td>
                 <td class="td-link" data-href="./admin_book_detail.html">{{ i.book.title }}</td>
+                <td>{{ i.user.name }}</td>
                 <td>{{ i.user.email }}</td>
                 <td>{{ i.created_at }}</td>
-                <td></td>
+                <td>{{ i.latest_status }}</td>
                 <td class="edit-table col-sm-1">
                   <div class="dropdown">
                     <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <li class="dropdown-item"><a href="#">編集</a></li>
-                      <li class="dropdown-item"><a href="#">返品変換</a></li>
-                      <li class="dropdown-item"><a href="#">売上変換</a></li>
-                      <li class="dropdown-item"><a href="#">取り置き登録</a></li>
-                      <li class="dropdown-item"><a href="#" style="color:red">削除</a></li>
-                    </ul>
-                  </div>
+                 </div>
                 </td>
               </tr>
               {% endfor %}
-
-              <tr>
-                <td class="td-link" data-href="./admin_book_detail.html">2</td>
-                <td class="td-link" data-href="./admin_book_detail.html">タイトル２</td>
-                <td>col2</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td class="edit-table col-sm-1">
-                  <div class="dropdown">
-                    <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <li class="dropdown-item"><a href="#">編集</a></li>
-                      <li class="dropdown-item"><a href="#">返品変換</a></li>
-                      <li class="dropdown-item"><a href="#">売上変換</a></li>
-                      <li class="dropdown-item"><a href="#">取り置き登録</a></li>
-                      <li class="dropdown-item"><a href="#" style="color:red">削除</a></li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="td-link" data-href="./admin_book_detail.html">3</td>
-                <td class="td-link" data-href="./admin_book_detail.html">タイトル３</td>
-                <td>col2</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td class="edit-table col-sm-1">
-                  <div class="dropdown">
-                    <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <li class="dropdown-item"><a href="#">編集</a></li>
-                      <li class="dropdown-item"><a href="#">返品変換</a></li>
-                      <li class="dropdown-item"><a href="#">売上変換</a></li>
-                      <li class="dropdown-item"><a href="#">取り置き登録</a></li>
-                      <li class="dropdown-item"><a href="#" style="color:red">削除</a></li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="td-link" data-href="./admin_book_detail.html">4</td>
-                <td class="td-link" data-href="./admin_book_detail.html">タイトル４</td>
-                <td>col2</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td class="edit-table col-sm-1">
-                  <div class="dropdown">
-                    <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <li class="dropdown-item"><a href="#">編集</a></li>
-                      <li class="dropdown-item"><a href="#">返品変換</a></li>
-                      <li class="dropdown-item"><a href="#">売上変換</a></li>
-                      <li class="dropdown-item"><a href="#">取り置き登録</a></li>
-                      <li class="dropdown-item"><a href="#" style="color:red">削除</a></li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-
-              <br>
-            </tbody>
+           </tbody>
           </table>
 
           <nav>

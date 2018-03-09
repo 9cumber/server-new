@@ -38,7 +38,7 @@ def book_list():
 @admin_main.route('/book/detail/<int:book_id>', methods=['GET'])
 @login_manager.admin_required
 def book_detail(book_id):
-    book = Book.fetch(id=book_id)
+    book = Book.fetch(book_id)
     return render_template(
         'detail_book.html', book=book, user=login_manager.get_logged_user())
 
@@ -47,7 +47,7 @@ def book_detail(book_id):
 @login_manager.admin_required
 def orders_list():
     from datetime import datetime
-    orders = [
+    orders = reversed([
         Order(
             id='1',
             book_id='id123456',
@@ -55,9 +55,18 @@ def orders_list():
             user_id='uid123456',
             latest_status='引き取り済み',
             created_at=datetime.now(),
-            user=User(email='hoge@gmail.com'),
-            book=Book(title='Bible'))
-    ]
+            user=User(name='Hage', email='hoge@gmail.com'),
+            book=Book(title='Bible')),
+        Order(
+            id='2',
+            book_id='id789123',
+            stock_id=None,
+            user_id='uid789123',
+            latest_status='仕入れ却下',
+            created_at=datetime.now(),
+            user=User(name='Fuga', email='aaa@gmail.com'),
+            book=Book(title='Romeo and Giuliette'))
+    ])
     return render_template(
         'list_orders.html',
         orders=orders,
