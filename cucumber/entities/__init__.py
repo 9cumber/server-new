@@ -216,6 +216,8 @@ class User(Base):
     @property
     def latest_order(self):
         import operator
+        if not self.orders:
+            return None
         result = max(self.orders, key=operator.attrgetter('id'))
         assert type(result) is not datetime
         return result
