@@ -4,7 +4,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 from flask import url_for, render_template, redirect, flash, Blueprint
 from cucumber.views.forms import UserForm
-from cucumber.entities import Order, User, Book
+from cucumber.entities import Order, OrderEvent, OrderStatus, User, Book
 from datetime import datetime
 
 from mock import MagicMock
@@ -101,7 +101,7 @@ def book_detail(book_id):
         'detail_book.html', book=book, user=login_manager.get_logged_user())
 
 
-@admin_main.route('/orders/list', methods=['GET'])
+@admin_main.route('/order/list', methods=['GET'])
 @login_manager.admin_required
 def orders_list():
     users = [
@@ -121,6 +121,7 @@ def orders_list():
     ]
     orders = reversed([
         Order(
+            id=1,
             stock_id=None,
             user_id='1',
             latest_status='引き取り済み',
@@ -128,6 +129,7 @@ def orders_list():
             user=users[0],
             book=books[0]),
         Order(
+            id=2,
             stock_id=None,
             user_id='2',
             latest_status='仕入れ却下',
@@ -138,6 +140,70 @@ def orders_list():
     return render_template(
         'list_orders.html',
         orders=orders,
+        user=login_manager.get_logged_user())
+
+
+@admin_main.route('/order/<int:order_id>/detail', methods=['GET'])
+@login_manager.admin_required
+def order_detail(order_id):
+    order = Order.fetch(order_id)
+    user = User(name='Ryoya Komatsu', email='s1220233@gmail.com')
+    book = Book(
+        id=1,
+        title='Practical Vim',
+        author='Drew Neil',
+        isbn13='9784048916592')
+    stock = Stock(id=1, book_id=1, price=10000)
+    order = Order(
+        stock_id=None,
+        user_id='1',
+        latest_status='引き取り済み',
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        user=user,
+        book=book,
+        stock=stock)
+    events = [
+        OrderEvent(
+            id=1,
+            order_id=1,
+            status='仕入れ承認待機',
+            created_at=datetime.now(),
+            remarks='dummy',
+            order_status=OrderStatus(status_group=2)),
+        OrderEvent(
+            id=2,
+            order_id=1,
+            status='取寄せ承認待機',
+            created_at=datetime.now(),
+            remarks='dummy',
+            order_status=OrderStatus(status_group=3)),
+        OrderEvent(
+            id=3,
+            order_id=1,
+            status='仕入れ待機',
+            created_at=datetime.now(),
+            remarks='dummy',
+            order_status=OrderStatus(status_group=3)),
+        OrderEvent(
+            id=4,
+            order_id=1,
+            status='引き取り待機',
+            created_at=datetime.now(),
+            remarks='dummy',
+            order_status=OrderStatus(status_group=2)),
+        OrderEvent(
+            id=5,
+            order_id=1,
+            status='引き取り済み',
+            created_at=datetime.now(),
+            remarks='dummy',
+            order_status=OrderStatus(status_group=1))
+    ]
+    return render_template(
+        'detail_order.html',
+        order=order,
+        events=events,
         user=login_manager.get_logged_user())
 
 
