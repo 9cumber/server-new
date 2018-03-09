@@ -7,12 +7,29 @@ import click
 from flask.cli import FlaskGroup
 
 def create_app(_=None):
-    return create_app()
+    from cucumber.app import create_app as _create_app
+    return _create_app()
 
 
 @click.group(cls=FlaskGroup, create_app=create_app)
 def cli():
     pass
+
+
+@cli.command()
+@click.option('--email', default=None, help="Admin's email address.")
+@click.option('--password', default=None, help="Admin's email address.")
+def add_admin(email, password):
+    if email is None or password is None:
+        print("Usage: manage.py add_admin --email=ADMIN_EMAIL --password=ADMIN_PASSWORD")
+        sys.exit()
+    print("New admin:\n\temail\t: %s\n\tpass\t: %s" % (email, password))
+    from cucumber.entities import User
+    from cucumber.extensions import db
+    db.session.add(User.new('admin', email, password, is_admin=1))
+    db.session.commit()
+
+
 
 @cli.command()
 def list_routes():

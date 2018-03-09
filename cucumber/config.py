@@ -3,12 +3,13 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 import six
 from flask_env import MetaFlaskEnv
-
-import os
-import binascii
+from datetime import timedelta
 
 
 @six.add_metaclass(MetaFlaskEnv)
 class Configuration(object):
     ENV_PREFIX = 'CUCUMBER_'
-    SECRET_KEY = binascii.hexlify(os.urandom(32))
+    SECRET_KEY = 'MJ*dz-?bl4-B?Bg7e&DZv+x9F'
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=1)
+    JWT_TOKEN_LOCATION = 'cookies'
+    JWT_ALGORITHM = "HS256"

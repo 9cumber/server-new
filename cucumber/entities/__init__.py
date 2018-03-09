@@ -5,6 +5,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from sqlalchemy import BINARY, Column, DateTime, ForeignKey, Integer, Numeric, String, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from cucumber.extensions import bcrypt, db
+from cucumber.modules.login_manager import BaseUserManager
+from cucumber.exceptions import UserNotFound
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -142,10 +145,19 @@ class Stock(Base):
         backref=u'stocks')
 
 
-class UserType(Base):
-    __tablename__ = 'user_types'
+class UserManager(BaseUserManager):
+    @staticmethod
+    def get_id_in_user(user):
+        return user.id
 
-    type = Column(String(63), primary_key=True)
+    @staticmethod
+    def check_admin(user):
+        return bool(user.is_admin)
+
+    @staticmethod
+    def resolve_user_by_id(user_id):
+        # pylint: disable=no-member
+        return db.session.query(User).filter_by(id=user_id).first()
 
 
 class User(Base):
@@ -154,12 +166,44 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
     email = Column(String(255), nullable=False, unique=True)
-    password = Column(BINARY(64), nullable=False)
-    type = Column(ForeignKey(u'user_types.type'), nullable=False, index=True)
+    password = Column(BINARY(60), nullable=False)
+    is_admin = Column(Integer, nullable=False, default=0)
     created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
-    user_type = relationship(
-        u'UserType',
-        primaryjoin='User.type == UserType.type',
-        backref=u'users')
+    @property
+    def is_uaizu(self):
+        try:
+            splitted_email = self.email.split('@')
+            return (len(splitted_email[0]) >= 1) and (len(
+                splitted_email) == 2) and ('u-aizu.ac.jp' in splitted_email[1])
+        except AttributeError:
+            return False
+
+    def verify_user(self, password):
+        try:
+            return bcrypt.check_password_hash(self.password, password)
+        except ValueError:
+            return False
+
+    @classmethod
+    def new(cls, name, email, password, is_admin=0):
+        from datetime import datetime
+        now_datetime = datetime.utcnow()
+        password = bcrypt.generate_password_hash(password)
+        new_user = cls(
+            name=name,
+            email=email,
+            password=password,
+            is_admin=int(is_admin),
+            created_at=now_datetime,
+            updated_at=now_datetime)
+        return new_user
+
+    @classmethod
+    def fetch(cls, email, password):
+        # pylint: disable=no-member
+        user = db.session.query(User).filter_by(email=email).first()
+        if not user.verify_user(password):
+            raise UserNotFound
+        return user
