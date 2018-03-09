@@ -57,9 +57,9 @@ def _jwt_optional(fn):
 
 
 class LoginManager(object):
-    def __init__(self, app=None):
+    def __init__(self, app=None, user_manager=None):
         self.app = app
-        self.user_manager = None
+        self.user_manager = user_manager
 
     def init_app(self, app, user_manager):
         self.app = app
