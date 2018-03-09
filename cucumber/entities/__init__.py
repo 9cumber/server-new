@@ -12,19 +12,20 @@ from cucumber.exceptions import UserNotFound
 Base = declarative_base()
 metadata = Base.metadata
 
-class FetchQueryMixin(object):
 
+class FetchQueryMixin(object):
     @classmethod
-    def make_query(cls, primary_key):
-        return db.session.query(cls).filter_by(id=primary_key)
+    def _make_query(cls):
+        # pylint: disable=no-member
+        return db.session.query(cls)
 
     @classmethod
     def fetch(cls, primary_key):
-        return cls.make_query(primary_key).first()
+        return cls._make_query().filter_by(id=primary_key).first()
 
     @classmethod
-    def fetch_all(cls, primary_key):
-        return cls.make_query(primary_key).all()
+    def fetch_all(cls):
+        return cls._make_query().order_by("id").all()
 
 
 class Book(Base, FetchQueryMixin):
