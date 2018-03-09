@@ -29,18 +29,20 @@ def index():
 @admin_main.route('/dashboard', methods=['GET'])
 @login_manager.admin_required
 def dashboard():
-    admonition_users_over_3_days = [
-        User.new('over 3days man', 'over_3days_man_1@u-aizu.ac.jp',
-                 'password'),
-        User.new('over_3days_man_2', 'over_3days_man_2@u-aizu.ac.jp',
-                 'password')
-    ]
-    admonition_users_over_7_days = [
-        User.new('over 7days man', 'over_7days_man_1@u-aizu.ac.jp',
-                 'password'),
-        User.new('over_7days_man_2', 'over_7days_man_2@u-aizu.ac.jp',
-                 'password')
-    ]
+    user_1 = User.new('over 3days man', 'over_3days_man_1@u-aizu.ac.jp', 'password')
+    user_2 = User.new('over 3days man', 'over_3days_man_2@u-aizu.ac.jp', 'password')
+    user_3 = User.new('over 7days man', 'over_7days_man_1@u-aizu.ac.jp', 'password')
+    user_4 = User.new('over 7days man', 'over_7days_man_2@u-aizu.ac.jp', 'password')
+
+    # 本来のステート遷移をせずに、テスト用に必要なステートのみを取っている
+    user_1_order = Order()
+    user_1_order.order_events.append(OverEvent())
+    user_1.orders.append(user_1_order)
+
+
+
+    admonition_users_over_3_days = [ user_1, user_2 ]
+    admonition_users_over_7_days = [ user_3, user_4 ]
     return render_template(
         'admin_dashboard.html',
         user=login_manager.get_logged_user(),
