@@ -47,25 +47,39 @@ def book_detail(book_id):
 @login_manager.admin_required
 def orders_list():
     from datetime import datetime
+    users = [
+            User(
+                name='Ryoya Komatsu',
+                email='s1220233@gmail.com',
+                ),
+            User(
+                name='Michael Jackson',
+                email='thisisit@google.com')]
+    books = [
+            Book(
+                title='Practical Vim',
+                author='Drew Neil',
+                isbn13='9784048916592',
+                ),
+            Book(
+                title='Bible',
+                author='God',
+                isbn13='123456789012X')]
     orders = reversed([
         Order(
-            id='1',
-            book_id='id123456',
             stock_id=None,
-            user_id='uid123456',
+            user_id='1',
             latest_status='引き取り済み',
             created_at=datetime.now(),
-            user=User(name='Hage', email='hoge@gmail.com'),
-            book=Book(title='Bible')),
+            user=users[0],
+            book=books[0]),
         Order(
-            id='2',
-            book_id='id789123',
             stock_id=None,
-            user_id='uid789123',
+            user_id='2',
             latest_status='仕入れ却下',
             created_at=datetime.now(),
-            user=User(name='Fuga', email='aaa@gmail.com'),
-            book=Book(title='Romeo and Giuliette'))
+            user=users[1],
+            book=books[1])
     ])
     return render_template(
         'list_orders.html',
