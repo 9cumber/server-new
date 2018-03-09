@@ -4,7 +4,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 from flask import url_for, render_template, redirect, flash, Blueprint
 from cucumber.views.forms import UserForm
-from cucumber.entities import Order, User, Book
+from cucumber.entities import Order, User, Book, OrderEvent, Stock
 from datetime import datetime
 
 from mock import MagicMock
@@ -29,8 +29,56 @@ def index():
 @admin_main.route('/dashboard', methods=['GET'])
 @login_manager.admin_required
 def dashboard():
+    now = datetime.utcnow()
+    book = Book(
+        id=1,
+        title=
+        'The Practice of Programming (Addison-Wesley Professional Computing Series) ',
+        author='Brian W. Pike, Rob Kernighan',
+        publisher='Addison-Wesley Professional',
+        isbn13='9780201615869',
+        language='us',
+        price='5948',
+        reldate=now,
+        shelf='shelf-1',
+        classify='classify-2',
+        description=
+        'With the same insight and authority that made their book The Unix Programming Environment a classic, Brian Kernighan and Rob Pike have written The Practice of Programming to help make individual programmers more effective and productive.',
+        picture=
+        'https://images-fe.ssl-images-amazon.com/images/I/41SUHlT7ovL._AC_SY200_.jpg'
+    )
+    user_1 = User.new('over 3days man', 'over_3days_man_1@u-aizu.ac.jp',
+                      'password')
+    user_2 = User.new('over 3days man', 'over_3days_man_2@u-aizu.ac.jp',
+                      'password')
+    user_3 = User.new('over 7days man', 'over_7days_man_1@u-aizu.ac.jp',
+                      'password')
+    user_4 = User.new('over 7days man', 'over_7days_man_2@u-aizu.ac.jp',
+                      'password')
+
+    # 本来のステート遷移をせずに、テスト用に必要なステートのみを取っている
+    def prepare(user_1):
+        user_1_order = Order(
+            latest_status="引き取り待機", created_at=now, updated_at=now)
+        user_1_order.stock = Stock(
+            type='instock', created_at=now, updated_at=now, price=5948)
+        user_1_order.book = book
+        user_1_order.order_events.append(
+            OrderEvent(status='引き取り待機', created_at=now))
+        user_1.orders.append(user_1_order)
+
+    prepare(user_1)
+    prepare(user_2)
+    prepare(user_3)
+    prepare(user_4)
+
+    admonition_users_over_3_days = [user_1, user_2]
+    admonition_users_over_7_days = [user_3, user_4]
     return render_template(
-        'admin_dashboard.html', user=login_manager.get_logged_user())
+        'admin_dashboard.html',
+        user=login_manager.get_logged_user(),
+        admonition_users_over_3_days=admonition_users_over_3_days,
+        admonition_users_over_7_days=admonition_users_over_7_days)
 
 
 @admin_main.route('/book/list', methods=['GET'])
