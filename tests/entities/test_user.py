@@ -4,9 +4,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import pytest
 from mock import patch
 from tests.conftest import DBCreatorFromSession
-from cucumber.entities import User, Base
+from cucumber.entities import User, Base, Order
 from cucumber.exceptions import UserNotFound
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def test_is_uaizu():
     assert User(email='s99999999@u-aizu.ac.jp').is_uaizu 
@@ -75,3 +75,15 @@ def test_fetch(Session):
 
         with pytest.raises(UserNotFound):
             User.fetch(None, 'poe')
+
+def test_latest_order():
+    now = datetime.utcnow()
+    now2 = datetime.utcnow() + timedelta(hours=3)
+    user = User.new('over 3days man', 'over_3days_man_1@u-aizu.ac.jp', 'password')
+    assert user.latest_order is None
+    user_order_1 = Order(latest_status="引き取り待機", created_at=now, updated_at=now)
+    user.orders.append(user_order_1)
+    assert user.latest_order is user_order_1
+    user_order_2 = Order(latest_status="引き取り待機", created_at=now2, updated_at=now2)
+    user.orders.append(user_order_2)
+    assert user.latest_order is user_order_2

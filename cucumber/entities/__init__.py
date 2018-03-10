@@ -2,6 +2,7 @@
 # Copyright © 2015-2018 9cumber Ltd. All Rights Reserved.
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from datetime import datetime
 from sqlalchemy import BINARY, Column, DateTime, ForeignKey, Integer, Numeric, String, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -129,6 +130,18 @@ class Order(Base, FetchQueryMixin):
     user = relationship(
         u'User', primaryjoin='Order.user_id == User.id', backref=u'orders')
 
+    @property
+    def latest_order_event(self):
+        import operator
+        if not self.order_events:
+            return None
+        result = max(self.order_events, key=operator.attrgetter('created_at'))
+        if result.status != self.latest_status:
+            raise RuntimeError(
+                'A consistency between database and application has been broken'
+            )
+        return result
+
 
 class Returned(Base, FetchQueryMixin):
     __tablename__ = 'returned'
@@ -214,6 +227,13 @@ class User(Base):
     updated_at = Column(DateTime, nullable=False)
 
     @property
+    def latest_order(self):
+        import operator
+        if not self.orders:
+            return None
+        return max(self.orders, key=operator.attrgetter('created_at'))
+
+    @property
     def is_uaizu(self):
         try:
             splitted_email = self.email.split('@')
@@ -230,7 +250,6 @@ class User(Base):
 
     @classmethod
     def new(cls, name, email, password, is_admin=0):
-        from datetime import datetime
         now_datetime = datetime.utcnow()
         password = bcrypt.generate_password_hash(password)
         new_user = cls(
