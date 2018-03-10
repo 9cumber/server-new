@@ -71,14 +71,14 @@ $('#stock_group_input').on('change', function(){
               </thead>
               <tbody>
                 {% for i in orders %}
-                <tr onclick="location.href = '{{ url_for("admin_main.order_detail",order_id=i.id) }}'">
+                <tr onclick="location.href='{{ url_for('admin_main.order_detail', order_id=i.id) }}'" style="cursor:pointer; ">
                   <td>{{ i.book.title }}</td>
                   <td>{{ i.book.author }}</td>
                   <td>{{ i.book.isbn13 }}</td>
                   <td>{{ i.user.name }}</td>
                   <td>{{ i.user.email }}</td>
                   <td>{{ i.created_at.year }}年{{ i.created_at.month }}月{{ i.created_at.day }}日 {{ i.created_at.hour }}時{{ i.created_at.minute }}分</td>
-                  <td>{{ i.latest_status }}</td>
+                  <td><b>{{ i.latest_status }}</b></td>
                 </tr>
                 {% endfor %}
               </tbody>
