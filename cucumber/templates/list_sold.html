@@ -18,55 +18,46 @@
     {% block content %}
     {{ super() }}
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
 
         {% include "components/sidebar.html" %}
 
         <div class="col-sm-10">
-          <blockquote>
-            <p>売上一覧</p>
-          </blockquote>
+          <h2>売上一覧</h2>
 
-          {% include "components/form_search.html" %}
+          <script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+  $('#soldList').DataTable({
+    "language" :{"url": '//cdn.datatables.net/plug-ins/1.10.16/i18n/Japanese.json'},
+    "pageLength" :50});
+});
+          </script>
 
-          <table class="table table-striped table-bordered table-hover">
+          <table class="table table-striped table-bordered table-hover" id="soldList">
             <thead>
               <tr>
-                <th>#</th>
-                <th>タイトル</th>
+                <th>本のタイトル</th>
+                <th>著者</th>
+                <th>ISBN</th>
+                <th>売上価格</th>
                 <th>売上日</th>
+                <th>備考</th>
               </tr>
             </thead>
             <tbody>
               {% for item in lists %}
               <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.book.title }}</td>
-                <td>{{ item.sold_at }}</td>
+                <td>{{ item.stock.book.title }}</td>
+                <td>{{ item.stock.book.author }}</td>
+                <td>{{ item.stock.book.isbn13 }}</td>
+                <td>{{ item.stock.price }}</td>
+                <td>{{ item.created_at }}</td>
+                <td>{{ item.remarks }}</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
-          <nav>
-            <ul class="pagination pagination-lg">
-              <li>
-                <a href="#" aria-label="前のページへ">
-                  <span aria-hidden="true">«</span>
-                </a>
-              </li>
-              <li class="active"><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li>
-                <a href="#" aria-label="次のページへ">
-                  <span aria-hidden="true">»</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
         </div>
       </div>
     </div>
