@@ -7,10 +7,20 @@ from flask_jwt_extended import set_access_cookies, unset_jwt_cookies
 
 from cucumber.modules.login_manager import AdminUnauthorized
 from cucumber.views.forms import UserForm
-from cucumber.extensions import login_manager
+from cucumber.extensions import login_manager, jwt
 from cucumber.entities import User
 
 admin_auth = Blueprint('admin_auth', __name__)
+"""
+ログインセッション失効時の処理
+"""
+
+
+@jwt.expired_token_loader
+def waste_token():
+    res = redirect(url_for('admin_auth.login'))
+    unset_jwt_cookies(res)
+    return res
 
 
 @admin_auth.route('/', methods=['GET'])
